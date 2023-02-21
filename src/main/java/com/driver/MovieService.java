@@ -12,11 +12,11 @@ public class MovieService {
     @Autowired
     MovieRepository repo;
 
-    void addMovieService(Movie movie) {
+    public void addMovieService(Movie movie) {
         repo.addMovieRepo(movie);
     }
 
-    void addDirectorService(Director director) {
+    public void addDirectorService(Director director) {
         repo.addDirectorRepo(director);
     }
 

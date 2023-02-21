@@ -22,20 +22,20 @@ public class MovieRepository {
         this.movieList = new ArrayList<>();
     }
 
-    void addMovieRepo(Movie movie) {
+    public void addMovieRepo(Movie movie) {
         movies.put(movie.getName(), movie);
     }
 
-    void addDirectorRepo(Director director) {
+    public void addDirectorRepo(Director director) {
         directors.put(director.getName(), director);
     }
 
-    void addMovieWithDirectorRepo(String name, Movie movie) {
+    public void addMovieWithDirectorRepo(String name, Movie movie) {
         movieList.add(movie);
         moviesWithDirector.put(name, movieList);
     }
 
-    Director getDirectorByNameRepo(String name) {
+    public Director getDirectorByNameRepo(String name) {
         return directors.getOrDefault(name, null);
     }
 
