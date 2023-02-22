@@ -11,15 +11,13 @@ import java.util.Map;
 public class MovieRepository {
     private HashMap<String, Movie> movies;
     private HashMap<String, Director> directors;
-    private HashMap<String, List<Movie>> moviesWithDirector;
+    private HashMap<String, List<String>> moviesWithDirector;
 
-    private List<Movie> movieList;
 
     MovieRepository() {
         this.movies = new HashMap<>();
         this.directors = new HashMap<>();
         this.moviesWithDirector = new HashMap<>();
-        this.movieList = new ArrayList<>();
     }
 
     public void addMovieRepo(Movie movie) {
@@ -30,9 +28,17 @@ public class MovieRepository {
         directors.put(director.getName(), director);
     }
 
-    public void addMovieWithDirectorRepo(String name, Movie movie) {
-        movieList.add(movie);
-        moviesWithDirector.put(name, movieList);
+    public void addMovieWithDirectorRepo(String name, String movie) {
+        List<String> list;
+        if (movies.containsKey(movie) && directors.containsKey(name)) {
+            if (moviesWithDirector.containsKey(name)) {
+                list = moviesWithDirector.get(name);
+            } else {
+                list = new ArrayList<>();
+            }
+            list.add(movie);
+            moviesWithDirector.put(name, list);
+        }
     }
 
     public Director getDirectorByNameRepo(String name) {
@@ -44,33 +50,40 @@ public class MovieRepository {
         return movies.getOrDefault(name, null);
     }
 
-    public List<Movie> getMoviesByDirectorNameRepo(String name) {
+    public List<String> getMoviesByDirectorNameRepo(String name) {
         return moviesWithDirector.getOrDefault(name, null);
     }
 
-    public List<Movie> findAllMovieRepo() {
-        return movieList;
+    public List<String> findAllMovieRepo() {
+        List<String> list = new ArrayList<>();
+        for (Map.Entry<String, Movie> movie : movies.entrySet()) {
+            list.add(movie.getValue().getName());
+        }
+        return list;
     }
 
     public void deleteALlDirectorRepo() {
-        for (Map.Entry<String, List<Movie>> movie : moviesWithDirector.entrySet()) {
-            List<Movie> list = movie.getValue();
-            for (Movie film : list) {
+        for (Map.Entry<String, List<String>> movie : moviesWithDirector.entrySet()) {
+            List<String> list = movie.getValue();
+            for (String film : list) {
                 if (movies.containsKey(film)) movies.remove(film);
             }
-            String name = movie.getKey();
-            moviesWithDirector.remove(name);
-            if (directors.containsKey(name)) directors.remove(name);
+            String dirName = movie.getKey();
+            moviesWithDirector.remove(dirName);
+            if (directors.containsKey(dirName)) directors.remove(dirName);
         }
     }
 
     public void deleteDirectorByNameRepo(String name) {
-        List<Movie> list = moviesWithDirector.get(name);
-
-        for (Movie movie : list) {
-            if (movies.containsKey(movie)) movies.remove(movie);
-        }
-        moviesWithDirector.remove(name);
         if (directors.containsKey(name)) directors.remove(name);
+        if (moviesWithDirector.containsKey(name)) {
+            for (Map.Entry<String, List<String>> mdp : moviesWithDirector.entrySet()) {
+                List<String> list = mdp.getValue();
+                for (String movieName : list) {
+                    if (movies.containsKey(movieName)) movies.remove(movieName);
+                }
+                moviesWithDirector.remove(name);
+            }
+        }
     }
 }

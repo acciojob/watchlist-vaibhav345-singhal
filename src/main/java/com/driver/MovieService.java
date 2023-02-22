@@ -20,7 +20,7 @@ public class MovieService {
         repo.addDirectorRepo(director);
     }
 
-    public void addMovieDirectorPairService(String name, Movie movie) {
+    public void addMovieDirectorPairService(String name, String movie) {
         repo.addMovieWithDirectorRepo(name, movie);
     }
 
@@ -32,11 +32,11 @@ public class MovieService {
         return repo.getMovieByNameRepo(name);
     }
 
-    public List<Movie> getMoviesByDirectorNameService(String name) {
+    public List<String> getMoviesByDirectorNameService(String name) {
         return repo.getMoviesByDirectorNameRepo(name);
     }
 
-    public List<Movie> findAllMovieService() {
+    public List<String> findAllMovieService() {
         return repo.findAllMovieRepo();
     }
 
