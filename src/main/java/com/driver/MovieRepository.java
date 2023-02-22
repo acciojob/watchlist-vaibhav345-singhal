@@ -57,7 +57,7 @@ public class MovieRepository {
     public List<String> findAllMovieRepo() {
         List<String> list = new ArrayList<>();
         for (Map.Entry<String, Movie> movie : movies.entrySet()) {
-            list.add(movie.getValue().getName());
+            list.add(movie.getKey());
         }
         return list;
     }
@@ -77,13 +77,10 @@ public class MovieRepository {
     public void deleteDirectorByNameRepo(String name) {
         if (directors.containsKey(name)) directors.remove(name);
         if (moviesWithDirector.containsKey(name)) {
-            for (Map.Entry<String, List<String>> mdp : moviesWithDirector.entrySet()) {
-                List<String> list = mdp.getValue();
-                for (String movieName : list) {
-                    if (movies.containsKey(movieName)) movies.remove(movieName);
-                }
-                moviesWithDirector.remove(name);
+            for (String movieName : moviesWithDirector.get(name)) {
+                if (movies.containsKey(movieName)) movies.remove(movieName);
             }
+            moviesWithDirector.remove(name);
         }
     }
 }
