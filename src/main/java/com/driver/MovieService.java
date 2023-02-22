@@ -20,8 +20,8 @@ public class MovieService {
         repo.addDirectorRepo(director);
     }
 
-    public void addMovieDirectorPairService(String name, String movie) {
-        repo.addMovieWithDirectorRepo(name, movie);
+    public void addMovieDirectorPairService(String movie, String director) {
+        repo.addMovieWithDirectorRepo(movie, director);
     }
 
     public Director getDirectorByNameService(String dirName) {

@@ -28,16 +28,16 @@ public class MovieRepository {
         directors.put(director.getName(), director);
     }
 
-    public void addMovieWithDirectorRepo(String name, String movie) {
+    public void addMovieWithDirectorRepo(String movie, String director) {
         List<String> list;
-        if (movies.containsKey(movie) && directors.containsKey(name)) {
-            if (moviesWithDirector.containsKey(name)) {
-                list = moviesWithDirector.get(name);
+        if (movies.containsKey(movie) && directors.containsKey(director)) {
+            if (moviesWithDirector.containsKey(director)) {
+                list = moviesWithDirector.get(director);
             } else {
                 list = new ArrayList<>();
             }
             list.add(movie);
-            moviesWithDirector.put(name, list);
+            moviesWithDirector.put(director, list);
         }
     }
 
